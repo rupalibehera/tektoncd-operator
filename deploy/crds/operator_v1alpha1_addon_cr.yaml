@@ -1,7 +1,0 @@
-apiVersion: operator.tekton.dev/v1alpha1
-kind: Addon
-metadata:
-  name: dashboard
-spec:
-  # Add fields here
-  version: v0.1.1
