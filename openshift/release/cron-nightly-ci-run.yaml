@@ -15,5 +15,5 @@ spec:
           containers:
           - name: cleanup
             image: quay.io/openshift/origin-cli:4.6
-            command: ["/bin/bash", "-c", "kubectl delete pipelinerun pipelines-operator-nightly || true;kubectl create -f https://raw.githubusercontent.com/rupalibehera/tektoncd-operator/master/openshift/release/nightly-ci-run.yaml"]
+            command: ["/bin/bash", "-c", "kubectl delete pipelinerun pipelines-operator-nightly || true;kubectl create -f https://raw.githubusercontent.com/openshift/tektoncd-operator/master/openshift/release/nightly-ci-run.yaml"]
           restartPolicy: Never

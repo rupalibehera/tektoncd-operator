@@ -16,7 +16,7 @@ spec:
             workspace: source
         params:
           - name: url
-            value: https://github.com/rupalibehera/tektoncd-operator # change this later
+            value: https://github.com/openshift/tektoncd-operator
           - name: revision
             value: master
           - name: subdirectory
@@ -50,16 +50,11 @@ spec:
                 # Configure git email and name
                 git config user.email "pipelines-dev@redhat.com"
                 git config user.name "OpenShift Pipelines"
-                # Adding for debugging remove it
-                git remote -v
-                export OPENSHIFT_REMOTE=rupali
-                export OPENSHIFT_ORG=rupalibehera
+
                 ## Make sure we can push to the branch with our GITHUB_TOKEN (disable logging to not leak)
                 set +x
                 git remote add upstream $(echo "https://github.com/tektoncd/operator.git"|sed "s,https://github.com/,https://${GITHUB_TOKEN}@github.com/,")
                 git remote add openshift $(echo "https://github.com/openshift/tektoncd-operator.git"|sed "s,https://github.com/,https://${GITHUB_TOKEN}@github.com/,")
-                # add rupali's remote to test
-                git remote add rupali $(echo "https://github.com/rupalibehera/tektoncd-operator.git"|sed "s,https://github.com/,https://${GITHUB_TOKEN}@github.com/,")
                 set -x
                 # Launch script
                 openshift/release/update-to-head.sh
