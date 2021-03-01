@@ -4,7 +4,7 @@
 # Usage: update-to-head.sh
 
 set -ex
-REPO_NAME=`basename $(git rev-parse --show-toplevel)`
+REPO_NAME=`basename $(git remote get-url origin)`
 OPENSHIFT_REMOTE=${OPENSHIFT_REMOTE:openshift}
 OPENSHIFT_ORG=${OPENSHIFT_ORG:openshift}
 
