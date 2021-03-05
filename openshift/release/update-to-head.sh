@@ -5,8 +5,8 @@
 
 set -ex
 REPO_NAME=`basename $(git remote get-url origin)`
-OPENSHIFT_REMOTE=${OPENSHIFT_REMOTE:openshift}
-OPENSHIFT_ORG=${OPENSHIFT_ORG:openshift}
+OPENSHIFT_REMOTE=${OPENSHIFT_REMOTE:-openshift}
+OPENSHIFT_ORG=${OPENSHIFT_ORG:-openshift}
 
 # Reset release-next to upstream/main.
 git fetch upstream main
