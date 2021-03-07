@@ -7,6 +7,7 @@ set -ex
 REPO_NAME=`basename $(git remote get-url origin)`
 OPENSHIFT_REMOTE=${OPENSHIFT_REMOTE:-openshift}
 OPENSHIFT_ORG=${OPENSHIFT_ORG:-openshift}
+LABEL=nightly-ci
 
 # Reset release-next to upstream/main.
 git fetch upstream main
@@ -27,8 +28,12 @@ git add ci
 git commit -m ":robot: Triggering CI on branch 'release-next' after synching to upstream/master"
 git push -f ${OPENSHIFT_REMOTE} release-next-ci
 
-if hash hub 2>/dev/null; then
-   hub pull-request --no-edit -l "kind/sync-fork-to-upstream" -b ${OPENSHIFT_ORG}/${REPO_NAME}:release-next -h ${OPENSHIFT_ORG}/${REPO_NAME}:release-next-ci
-else
-   echo "hub (https://github.com/github/hub) is not installed, so you'll need to create a PR manually."
-fi
+already_open_github_issue_id=$(hub pr list -s open -f "%I %l%n"|grep ${LABEL}| awk '{print $1}'|head -1)
+[[ -n ${already_open_github_issue_id} ]]  && {
+    echo "PR for nightly is already open on #${already_open_github_issue_id} sending a /retest"
+    hub api repos/${OPENSHIFT_ORG}/${REPO_NAME}/issues/${already_open_github_issue_id}/comments -f body='/retest'
+    exit
+}
+
+hub pull-request -m "🛑🔥 Triggering Nightly CI for ${REPO_NAME} 🔥🛑" -m "/hold" -m "Nightly CI do not merge :stop_sign:" \
+    --no-edit -l "${LABEL}" -b ${OPENSHIFT_ORG}/${REPO_NAME}:release-next -h ${OPENSHIFT_ORG}/${REPO_NAME}:release-next-ci
