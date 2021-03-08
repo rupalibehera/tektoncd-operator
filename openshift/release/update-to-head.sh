@@ -7,6 +7,8 @@ set -ex
 REPO_NAME=`basename $(git remote get-url origin)`
 OPENSHIFT_REMOTE=${OPENSHIFT_REMOTE:-openshift}
 OPENSHIFT_ORG=${OPENSHIFT_ORG:-openshift}
+PIPELINE_VERSION=${PIPELINE_VERSION:-0.22.0}
+TRIGGERS_VERSION=${TRIGGERS_VERSION:-0.12.0}
 LABEL=nightly-ci
 
 # Reset release-next to upstream/main.
@@ -16,7 +18,16 @@ git checkout upstream/main --no-track -B release-next
 # Update openshift's master and take all needed files from there.
 git fetch ${OPENSHIFT_REMOTE} master
 git checkout FETCH_HEAD openshift OWNERS_ALIASES OWNERS
-git add openshift OWNERS_ALIASES OWNERS 
+cd cmd/openshift/operator/kodata/tekton-trigger
+mkdir ${TRIGGERS_VERSION}-PreRelease
+cd ${TRIGGERS_VERSION}-PreRelease
+wget https://raw.githubusercontent.com/openshift/tektoncd-triggers/release-next/openshift/release/tektoncd-triggers-nightly.yaml
+cd ../../tekton-pipeline
+mkdir ${PIPELINE_VERSION}-PreRelease
+cd ${PIPELINE_VERSION}-PreRelease
+wget https://raw.githubusercontent.com/openshift/tektoncd-pipeline/release-next-ci/openshift/release/tektoncd-pipeline-nightly.yaml
+cd ../../../../../..
+git add openshift OWNERS_ALIASES OWNERS cmd/openshift/operator/kodata
 git commit -m ":open_file_folder: Update openshift specific files."
 
 git push -f ${OPENSHIFT_REMOTE} release-next
