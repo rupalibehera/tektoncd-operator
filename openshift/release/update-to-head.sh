@@ -28,6 +28,8 @@ git add ci
 git commit -m ":robot: Triggering CI on branch 'release-next' after synching to upstream/master"
 git push -f ${OPENSHIFT_REMOTE} release-next-ci
 
+# removing upstream remote so that hub points origin for hub pr list command due to this issue https://github.com/github/hub/issues/1973
+git remote remove upstream
 already_open_github_issue_id=$(hub pr list -s open -f "%I %l%n"|grep ${LABEL}| awk '{print $1}'|head -1)
 [[ -n ${already_open_github_issue_id} ]]  && {
     echo "PR for nightly is already open on #${already_open_github_issue_id} sending a /retest"
