@@ -28,7 +28,7 @@ wget https://raw.githubusercontent.com/openshift/tektoncd-triggers/release-next/
 
 mkdir -p ${PIPELINE_YAML_DIRECTORY}
 # Downloading pipeline nightly release yaml
-wget https://raw.githubusercontent.com/openshift/tektoncd-pipeline/release-next/openshift/release/tektoncd-pipeline-nightly.yaml -P ${PIPELINE_YAML_DIRECTORY}
+wget https://raw.githubusercontent.com/openshift/tektoncd-pipeline/release-next-ci/openshift/release/tektoncd-pipeline-nightly.yaml -P ${PIPELINE_YAML_DIRECTORY}
 
 git add openshift OWNERS_ALIASES OWNERS cmd/openshift/operator/kodata
 git commit -m ":open_file_folder: Update openshift specific files."
