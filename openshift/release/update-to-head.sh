@@ -20,7 +20,7 @@ git checkout upstream/main --no-track -B release-next
 
 # Update openshift's master and take all needed files from there.
 git fetch ${OPENSHIFT_REMOTE} master
-git checkout FETCH_HEAD openshift OWNERS_ALIASES OWNERS
+git checkout FETCH_HEAD openshift OWNERS_ALIASES OWNERS .tekton
 
 mkdir -p ${TRIGGERS_YAML_DIRECTORY}
 # Downloading triggers nightly release yaml
