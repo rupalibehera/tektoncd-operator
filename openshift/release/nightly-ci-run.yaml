@@ -41,8 +41,8 @@ spec:
                 - name: GITHUB_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: github-token
-                      key: password
+                      name: nightly-ci-github-hub-token
+                      key: hub-token
               image: gcr.io/tekton-releases/dogfooding/hub:latest
               script: |
                 #!/usr/bin/env bash

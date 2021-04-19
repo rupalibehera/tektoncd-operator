@@ -12,7 +12,7 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: nightly-pipeline-operator
+          serviceAccountName: tkn-aac-sa
           containers:
           - name: cleanup
             image: quay.io/openshift/origin-cli:4.6
