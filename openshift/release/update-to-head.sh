@@ -46,8 +46,8 @@ git push -f ${OPENSHIFT_REMOTE} release-next-ci
 git remote remove upstream
 already_open_github_issue_id=$(hub pr list -s open -f "%I %l%n"|grep ${LABEL}| awk '{print $1}'|head -1)
 [[ -n ${already_open_github_issue_id} ]]  && {
-    echo "PR for nightly is already open on #${already_open_github_issue_id} sending a /retest"
-    hub api repos/${OPENSHIFT_ORG}/${REPO_NAME}/issues/${already_open_github_issue_id}/comments -f body='/retest'
+    echo "PR for nightly is already open on #${already_open_github_issue_id}"
+    #hub api repos/${OPENSHIFT_ORG}/${REPO_NAME}/issues/${already_open_github_issue_id}/comments -f body='/retest'
     exit
 }
 
