@@ -24,7 +24,7 @@ git checkout FETCH_HEAD openshift OWNERS_ALIASES OWNERS .tekton
 
 mkdir -p ${TRIGGERS_YAML_DIRECTORY}
 # Downloading triggers nightly release yaml
-wget https://raw.githubusercontent.com/openshift/tektoncd-triggers/release-next/openshift/release/tektoncd-triggers-nightly.yaml -P ${TRIGGERS_YAML_DIRECTORY}
+wget https://raw.githubusercontent.com/openshift/tektoncd-triggers/release-next-ci/openshift/release/tektoncd-triggers-nightly.yaml -P ${TRIGGERS_YAML_DIRECTORY}
 
 mkdir -p ${PIPELINE_YAML_DIRECTORY}
 # Downloading pipeline nightly release yaml
