@@ -29,6 +29,9 @@ wget https://raw.githubusercontent.com/openshift/tektoncd-triggers/release-next-
 mkdir -p ${PIPELINE_YAML_DIRECTORY}
 # Downloading pipeline nightly release yaml
 wget https://raw.githubusercontent.com/openshift/tektoncd-pipeline/release-next-ci/openshift/release/tektoncd-pipeline-nightly.yaml -P ${PIPELINE_YAML_DIRECTORY}
+# copying role and rolebinding to pipeline yaml directory
+cp cmd/openshift/operator/kodata/tekton-pipeline/0.22.0/01-clusterrole.yaml ${PIPELINE_YAML_DIRECTORY}
+cp cmd/openshift/operator/kodata/tekton-pipeline/0.22.0/02-rolebinding.yaml ${PIPELINE_YAML_DIRECTORY}
 
 git add openshift OWNERS_ALIASES OWNERS cmd/openshift/operator/kodata
 git commit -m ":open_file_folder: Update openshift specific files."
@@ -53,3 +56,6 @@ already_open_github_issue_id=$(hub pr list -s open -f "%I %l%n"|grep ${LABEL}| a
 
 hub pull-request -m "🛑🔥 Triggering Nightly CI for ${REPO_NAME} 🔥🛑" -m "/hold" -m "Nightly CI do not merge :stop_sign:" \
     --no-edit -l "${LABEL}" -b ${OPENSHIFT_ORG}/${REPO_NAME}:release-next -h ${OPENSHIFT_ORG}/${REPO_NAME}:release-next-ci
+
+# This fix is required while running locally, otherwise your upstream remote is removed
+git remote add upstream git@github.com:tektoncd/operator.git
